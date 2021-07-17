@@ -17,7 +17,7 @@ const Stack = createStackNavigator();
 
 const AppStack = () => { 
     return(
-        <Stack.Navigator
+        <Stack.Navigator //This header will display on every page of the mobile app
             initialRouteName='HomeScreen'
             mode='card'
             headerMode='screen'
@@ -44,6 +44,7 @@ const AppStack = () => {
                 }
             }}
         >
+            {/**Below is the stack that will be used throughout this project */}
             <Stack.Screen name="HomeScreen" component={Home} options={{title: '-T- Mobile REGISTRATION APP'}}/>
             <Stack.Screen name="AddRegistrationScreen" component={RegistrationDisplay} options={{title: ''}}/> 
             <Stack.Screen name="ViewRegistrationScreen" component={FlatListDisplay} options={{title: ''}}/>
@@ -54,8 +55,10 @@ const AppStack = () => {
 const App: React.FC = () => {  
     return(
         <NavigationContainer>
+            {/** Below imports the AppStack created above for use in the mobile app */}
             <AppStack/>
 
+            {/** This footer displays on every navigable page */}
             <View style={{paddingBottom: 20, paddingTop: 10, alignItems: "center"}}>
                 <Text style={{fontSize: 15, fontStyle: "italic"}}>Copyright: Chinezelum Okadigbo</Text>
             </View>

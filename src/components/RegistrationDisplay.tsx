@@ -26,44 +26,19 @@ type Props = {
 
 const RegistrationDisplay: React.FC<Props> = ({ navigation }) => {
 
-  //database connection
-  const [defaultConnection, setConnection] = useState<Connection | null>(null)
-
-  const setupConnection = useCallback(async () => {
-    try {
-      const connection = await createConnection({
-        type: 'expo',
-        database: 'registration_entries.db',
-        driver: require('expo-sqlite'),
-
-        synchronize: true,
-        entities: [RegistrationEntry],
-      });
-      setConnection(connection);
-      getRegistrationEntries(state, setState);
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
-
-  useEffect(() => {
-    if (!defaultConnection) {
-      setupConnection();
-    } else {
-      getRegistrationEntries(state, setState);
-    }
-  }, []);
-
+  // Original navigation method attempted. Did not work. Changed to navigation using props
   // const navigation = useNavigation();
 
   const [state, setState] = useState<IState>({
     registrationEntries: [],
-    onAddEntry: false // This sets the initial view state of the AddRegistration form to false. this ensure the whne the components mounts, the form is not visible
+    onAddEntry: false 
+    // This sets the initial view state of the AddRegistration form to false. this ensure the whne the components mounts, the form is not visible
   })
 
   const createEntryDemo = (registrationEntryData: IRegistrationEntry) => {
     createRegistrationEntry(registrationEntryData, state, setState);
-    navigation.navigate('ViewRegistrationScreen') // This pushes the user from the RegistrationDisplay screen to the ViewRegistration screen to view what has been sybmitted to the database
+    navigation.navigate('ViewRegistrationScreen') 
+    // This pushes the user from the RegistrationDisplay screen to the ViewRegistration screen to view what has been submitted to the database.
   }
 
   const cancelCreateEntryDemo = () => {
@@ -93,7 +68,8 @@ const RegistrationDisplay: React.FC<Props> = ({ navigation }) => {
             }
           </View>
 
-          {state.onAddEntry && <AddRegistration createEntry={createEntryDemo} cancelCreateEntry={cancelCreateEntryDemo} />}  {/** This is for the conditional display of the AddRegistration form */}
+          {state.onAddEntry && <AddRegistration createEntry={createEntryDemo} cancelCreateEntry={cancelCreateEntryDemo} />}  
+          {/** This is for the conditional display of the AddRegistration form */}
 
         </ScrollView>
 

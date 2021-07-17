@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState }  from 'react';
+import React from 'react';
 import {StyleSheet, SafeAreaView, ImageBackground, View} from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { Button } from 'react-native-elements';
@@ -19,11 +19,16 @@ const Home: React.FC<Props> = ({navigation}) => {
   
   return(
     <SafeAreaView style={styles.container}>
-      <ImageBackground style={{flex: 1}} source={require('./img/wallpaper.png')}>
+      <ImageBackground style={{flex: 1}} source={require('./img/wallpaper.png')}> 
+        {/** Found this method and used to add a background to the home screen to
+         * make the app more attractive to the user
+         */}
+
         <View style={{flex: 1, alignItems: "center"}}>
 
-        <View style={{padding: 130}}></View>
+          <View style={{padding: 130}}></View>
 
+          {/** These buttons direct to the created screens in the AppStack */}
           <Button 
             type="solid"
             title="Register SIM Here"

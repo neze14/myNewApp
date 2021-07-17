@@ -2,46 +2,61 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
-import { Badge, Button, ButtonGroup, Icon } from 'react-native-elements';
+import { Button, ButtonGroup, Icon } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Connection, createConnection } from 'typeorm';
 import { RegistrationEntry } from './entities/registration-entry.entities';
 import { IState } from './interfaces/registration-entry.interface';
-import { deleteRegistrationEntry, getRegistrationEntries } from './services/registration-entry.service';
+import { deleteRegistrationEntry, getDbConnection, getRegistrationEntries } from './services/registration-entry.service';
 
 const FlatListDisplay: React.FC = () => {
-
-    const [defaultConnection, setConnection] = useState<Connection | null>(null);
-
-    const setupConnection = useCallback(async () => {
-        try {
-          const connection = await createConnection({
-          type: 'expo',
-          database: 'registration_entries.db',
-          driver: require('expo-sqlite'),
-          
-          synchronize: true,
-          entities: [RegistrationEntry],
-        });
-        setConnection(connection);
-        getRegistrationEntries(state, setState);
-        } catch (error) {
-          console.log(error);
-        }
-      }, []);
-
-      useEffect(() => {
-        if (!defaultConnection) {
-          setupConnection();
-        } else {
-          getRegistrationEntries(state, setState);
-        }
-    }, []);
 
     const  [state, setState] = useState<IState> ({
         registrationEntries: [],
         onAddEntry: false
     })
+
+    // create connection
+    const [defaultConnection, setConnection] = useState<Connection | null>(null);
+
+    {/** 
+        const setupConnection = useCallback(async () => {
+            try {
+            const connection = await createConnection({
+            type: 'expo',
+            database: 'registration_entries.db',
+            driver: require('expo-sqlite'),
+            
+            synchronize: true,
+            entities: [RegistrationEntry],
+            });
+            setConnection(connection);
+            getRegistrationEntries(state, setState);
+            } catch (error) {
+            console.log(error);
+            }
+        }, []);
+
+        useEffect(() => {
+            if (!defaultConnection) {
+            setupConnection();
+            } else {
+            getRegistrationEntries(state, setState);
+            }
+        }, []);
+    */}
+
+    const setupConnection = useCallback( () => 
+        getDbConnection(setConnection, state, setState
+    ), []);
+
+    useEffect(() => {
+        if (!defaultConnection) {
+            setupConnection();
+        } else {
+            getRegistrationEntries(state, setState);
+        }
+    }, []);
 
     const deleteEntry = (id: number) => { 
         deleteRegistrationEntry(id, state, setState);
@@ -50,7 +65,7 @@ const FlatListDisplay: React.FC = () => {
     return (
         <SafeAreaView>
 
-            <Text style= {{backgroundColor: "#DA1884", fontSize: 20, color: "white",  padding: 10, alignItems: "stretch" }}>REGISTERED MOBILE SIMs <Badge status="primary" value={state.registrationEntries} /></Text>
+            <Text style= {{backgroundColor: "#DA1884", fontSize: 20, color: "white",  padding: 10, alignItems: "stretch" }}>REGISTERED MOBILE SIMs </Text>
 
             <View>
                     <FlatList
