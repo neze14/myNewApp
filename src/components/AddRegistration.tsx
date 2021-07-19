@@ -40,8 +40,7 @@ const AddRegistration: React.FC<Props> = ({ createEntry, cancelCreateEntry }) =>
                 <ScrollView>
                     <KeyboardAvoidingView
                         behavior={Platform.OS === "ios" ? "padding" : "height"}
-                        style={styles.container}
-                    >
+                        style={styles.container}>
         
                         <Text h3 style={styles.inputContainerStyle}>Registration Form: </Text>
                     

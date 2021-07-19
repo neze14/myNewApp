@@ -1,15 +1,17 @@
 // This component merges the EntryFlatList and EntryFlatListItem Component
 
+import { useNavigation } from '@react-navigation/core';
 import React, { useCallback, useEffect, useState } from 'react';
 import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { Button, ButtonGroup, Icon } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Connection, createConnection } from 'typeorm';
-import { RegistrationEntry } from './entities/registration-entry.entities';
+import { Connection } from 'typeorm';
 import { IState } from './interfaces/registration-entry.interface';
 import { deleteRegistrationEntry, getDbConnection, getRegistrationEntries } from './services/registration-entry.service';
 
 const FlatListDisplay: React.FC = () => {
+
+    const navigation = useNavigation();
 
     const  [state, setState] = useState<IState> ({
         registrationEntries: [],
@@ -19,39 +21,12 @@ const FlatListDisplay: React.FC = () => {
     // create connection
     const [defaultConnection, setConnection] = useState<Connection | null>(null);
 
-    {/** 
-        const setupConnection = useCallback(async () => {
-            try {
-            const connection = await createConnection({
-            type: 'expo',
-            database: 'registration_entries.db',
-            driver: require('expo-sqlite'),
-            
-            synchronize: true,
-            entities: [RegistrationEntry],
-            });
-            setConnection(connection);
-            getRegistrationEntries(state, setState);
-            } catch (error) {
-            console.log(error);
-            }
-        }, []);
-
-        useEffect(() => {
-            if (!defaultConnection) {
-            setupConnection();
-            } else {
-            getRegistrationEntries(state, setState);
-            }
-        }, []);
-    */}
-
     const setupConnection = useCallback( () => 
         getDbConnection(setConnection, state, setState
     ), []);
 
     useEffect(() => {
-        if (!defaultConnection) {
+        if (defaultConnection == Connection) {
             setupConnection();
         } else {
             getRegistrationEntries(state, setState);
@@ -91,7 +66,7 @@ const FlatListDisplay: React.FC = () => {
                                                 type="clear"
                                                 title="Edit"
                                                 titleStyle={{ fontSize: 15 }}
-                                                onPress={() => {"Changes can not be made to saved entries"}} /** REVIEW THIS!!! */
+                                                onPress={() => {}}
                                             />,
 
                                             <Button

@@ -6,7 +6,7 @@ import { Button } from 'react-native-elements';
 type HomeScreenStackParamList = {
     HomeScreen: undefined; 
     AddRegistrationScreen: {title:string} | undefined;
-    ViewRegistrationScreen: {title:string} | undefined;
+    ViewRegistrationScreen: {demoParam:{}} | undefined;
 };
 
 type HomeScreenNavigationProp = StackNavigationProp<HomeScreenStackParamList, 'HomeScreen'>;
@@ -39,7 +39,10 @@ const Home: React.FC<Props> = ({navigation}) => {
           <Button 
             type="solid"
             title="View Registered SIMs"
-            onPress={()=> navigation.navigate('ViewRegistrationScreen')}/>
+            onPress={()=> navigation.navigate('ViewRegistrationScreen', {
+            demoParam: {}
+            }
+            )}/>
 
           <View style={{padding: 10}}></View>
 

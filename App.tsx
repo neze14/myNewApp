@@ -53,6 +53,9 @@ const AppStack = () => {
 }
 
 const App: React.FC = () => {  
+
+    
+
     return(
         <NavigationContainer>
             {/** Below imports the AppStack created above for use in the mobile app */}

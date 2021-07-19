@@ -6,8 +6,6 @@ import { createRegistrationEntry, getRegistrationEntries } from './services/regi
 import AddRegistration from '../components/AddRegistration';
 import { Button, Icon } from 'react-native-elements';
 import { ScrollView } from 'react-native-gesture-handler';
-import { RegistrationEntry } from './entities/registration-entry.entities';
-import { createConnection, Connection } from 'typeorm';
 import { StackNavigationProp } from '@react-navigation/stack';
 
 
@@ -16,7 +14,7 @@ type RegistrationScreenStackParamList = {
   AddRegistrationScreen: {title:string} | undefined;
   ViewRegistrationScreen: {title:string} | undefined; 
 };
-
+ 
 type RegistrationScreenNavigationProp = StackNavigationProp<RegistrationScreenStackParamList, 'AddRegistrationScreen'>;
 
 type Props = {
